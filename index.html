@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COREBLOCK - Workshop</title>
+    <title>COREBLOCK Workshop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
             --radius: 0.65rem;
@@ -30,610 +31,419 @@
             --chart-3: oklch(0.398 0.07 227.392);
             --chart-4: oklch(0.828 0.189 84.429);
             --chart-5: oklch(0.769 0.188 70.08);
+            --sidebar: oklch(0.985 0 0);
+            --sidebar-foreground: oklch(0.141 0.005 285.823);
+            --sidebar-primary: oklch(0.645 0.246 16.439);
+            --sidebar-primary-foreground: oklch(0.969 0.015 12.422);
+            --sidebar-accent: oklch(0.967 0.001 286.375);
+            --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
+            --sidebar-border: oklch(0.92 0.004 286.32);
+            --sidebar-ring: oklch(0.645 0.246 16.439);
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .dark {
+            --background: oklch(0.141 0.005 285.823);
+            --foreground: oklch(0.985 0 0);
+            --card: oklch(0.21 0.006 285.885);
+            --card-foreground: oklch(0.985 0 0);
+            --popover: oklch(0.21 0.006 285.885);
+            --popover-foreground: oklch(0.985 0 0);
+            --primary: oklch(0.645 0.246 16.439);
+            --primary-foreground: oklch(0.969 0.015 12.422);
+            --secondary: oklch(0.274 0.006 286.033);
+            --secondary-foreground: oklch(0.985 0 0);
+            --muted: oklch(0.274 0.006 286.033);
+            --muted-foreground: oklch(0.705 0.015 286.067);
+            --accent: oklch(0.274 0.006 286.033);
+            --accent-foreground: oklch(0.985 0 0);
+            --destructive: oklch(0.704 0.191 22.216);
+            --border: oklch(1 0 0 / 10%);
+            --input: oklch(1 0 0 / 15%);
+            --ring: oklch(0.645 0.246 16.439);
+            --chart-1: oklch(0.488 0.243 264.376);
+            --chart-2: oklch(0.696 0.17 162.48);
+            --chart-3: oklch(0.769 0.188 70.08);
+            --chart-4: oklch(0.627 0.265 303.9);
+            --chart-5: oklch(0.645 0.246 16.439);
+            --sidebar: oklch(0.21 0.006 285.885);
+            --sidebar-foreground: oklch(0.985 0 0);
+            --sidebar-primary: oklch(0.645 0.246 16.439);
+            --sidebar-primary-foreground: oklch(0.969 0.015 12.422);
+            --sidebar-accent: oklch(0.274 0.006 286.033);
+            --sidebar-accent-foreground: oklch(0.985 0 0);
+            --sidebar-border: oklch(1 0 0 / 10%);
+            --sidebar-ring: oklch(0.645 0.246 16.439);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: var(--foreground);
-            background: var(--background);
+            background: linear-gradient(135deg, var(--background) 0%, var(--secondary) / 0.3 100%);
+            position: relative;
             overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
+        .grid-pattern {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
-            transition: all 0.3s ease;
+            height: 100%;
+            background-image: linear-gradient(var(--ring) / 0.5 1px, transparent 1px),
+                              linear-gradient(90deg, var(--ring) / 0.5 1px, transparent 1px);
+            background-size: 24px 24px;
+            mask-image: linear-gradient(to bottom right, var(--background) / 0.8, transparent);
+            opacity: 0.4;
+            z-index: -1;
         }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--foreground);
-            font-weight: 500;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .register-btn-nav {
-            background: var(--primary);
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--ring));
             color: var(--primary-foreground);
-            padding: 0.5rem 1.5rem;
+            transition: all 0.3s ease-in-out;
             border-radius: var(--radius);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
+            border: 1px solid var(--ring);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
         }
-
-        .register-btn-nav:hover {
+        @media (min-width: 1024px) {
+            .btn-primary {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+        .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, var(--ring), var(--primary));
         }
-
-        /* Hero Section */
-        .hero {
-            padding: 8rem 0 4rem;
-            background: linear-gradient(135deg, var(--background) 0%, var(--secondary) 100%);
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary), var(--chart-1));
+            color: var(--secondary-foreground);
+            transition: all 0.3s ease-in-out;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        @media (min-width: 1024px) {
+            .btn-secondary {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, var(--chart-1), var(--secondary));
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .scale-in {
+            transition: transform 0.3s ease-in-out;
+        }
+        .scale-in:hover {
+            transform: scale(1.05);
+        }
+        .section-bg {
             position: relative;
             overflow: hidden;
         }
-
-        .hero::before {
+        .section-bg::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="%23000" opacity="0.05"/><circle cx="80" cy="40" r="1" fill="%23000" opacity="0.05"/><circle cx="40" cy="80" r="1" fill="%23000" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            opacity: 0.5;
-        }
-
-        .hero-content {
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--foreground) 0%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--muted-foreground);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: var(--primary-foreground);
-            padding: 1rem 2rem;
-            border-radius: var(--radius);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--foreground);
-            padding: 1rem 2rem;
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        /* Video Section */
-        .video-section {
-            padding: 4rem 0;
-            background: var(--card);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-header h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--foreground);
-        }
-
-        .section-header p {
-            font-size: 1.1rem;
-            color: var(--muted-foreground);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .video-container {
-            max-width: 900px;
-            margin: 0 auto;
-            border-radius: calc(var(--radius) * 2);
-            overflow: hidden;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            position: relative;
-            background: var(--card);
-        }
-
-        .video-container:hover {
-            transform: scale(1.02);
-        }
-
-        .video-container iframe {
             width: 100%;
-            height: auto;
-            aspect-ratio: 16/9;
-            border: none;
-            display: block;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                var(--secondary) / 0.05,
+                transparent 50%,
+                var(--secondary) / 0.05
+            );
+            z-index: -1;
         }
-
-        /* Video Loading State */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 1rem;
+            grid-template-areas:
+                "desc desc feat1 feat2"
+                "desc desc feat3 feat4";
+        }
+        .bento-desc { grid-area: desc; }
+        .bento-feat1 { grid-area: feat1; }
+        .bento-feat2 { grid-area: feat2; }
+        .bento-feat3 { grid-area: feat3; }
+        .bento-feat4 { grid-area: feat4; }
+        .video-container {
+            position: relative;
+            max-width: 100%;
+            margin: 2rem auto;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
         .video-loading {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, var(--card) 0%, var(--secondary) 100%);
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--secondary), var(--muted));
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             z-index: 10;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+            transition: opacity 0.5s ease-out;
         }
-
         .video-loading.hidden {
             opacity: 0;
-            visibility: hidden;
+            pointer-events: none;
         }
-
         .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid var(--border);
-            border-top: 4px solid var(--primary);
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--primary);
+            border-top: 4px solid transparent;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-bottom: 1.5rem;
         }
-
-        .loading-content {
-            text-align: center;
-            max-width: 300px;
-        }
-
-        .loading-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--foreground);
-            margin-bottom: 0.5rem;
-        }
-
-        .loading-text {
-            color: var(--muted-foreground);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .loading-progress {
-            width: 200px;
-            height: 4px;
-            background: var(--border);
-            border-radius: 2px;
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-
-        .loading-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--chart-1));
-            border-radius: 2px;
-            width: 0%;
-            animation: loadingProgress 3s ease-in-out infinite;
-        }
-
-        .loading-dots {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-        }
-
-        .loading-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--primary);
-            border-radius: 50%;
-            animation: loadingDots 1.5s ease-in-out infinite;
-        }
-
-        .loading-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .loading-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        @keyframes loadingProgress {
-            0% { width: 0%; }
-            50% { width: 70%; }
-            100% { width: 100%; }
+        .loading-content {
+            text-align: center;
+            margin-top: 1rem;
         }
-
-        @keyframes loadingDots {
-            0%, 80%, 100% {
-                transform: scale(0.8);
-                opacity: 0.5;
-            }
-            40% {
-                transform: scale(1.2);
-                opacity: 1;
-            }
-        }
-
-        /* About Section */
-        .about-section {
-            padding: 4rem 0;
-            background: var(--secondary);
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-text h2 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: var(--foreground);
-        }
-
-        .about-text p {
-            font-size: 1.1rem;
-            color: var(--muted-foreground);
-            margin-bottom: 1.5rem;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .feature-card {
-            background: var(--card);
-            padding: 2rem;
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-icon {
-            width: 3rem;
-            height: 3rem;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .feature-card h3 {
+        .loading-title {
             font-size: 1.25rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
             color: var(--foreground);
         }
-
-        .feature-card p {
+        .loading-text {
             color: var(--muted-foreground);
+            margin-top: 0.5rem;
         }
-
-        /* Contact Section */
-        .contact-section {
-            padding: 4rem 0;
-            background: var(--background);
+        .loading-progress {
+            width: 200px;
+            height: 4px;
+            background-color: var(--muted);
+            border-radius: 2px;
+            margin: 1rem auto;
+            overflow: hidden;
         }
-
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: start;
+        .loading-progress-bar {
+            width: 0;
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--ring));
+            animation: progress 2s ease-in-out infinite;
         }
-
-        .contact-info {
+        @keyframes progress {
+            0% { width: 0; }
+            50% { width: 80%; }
+            100% { width: 0; }
+        }
+        .loading-dots {
             display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            animation: bounce 1.2s ease-in-out infinite;
+        }
+        .loading-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .loading-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+        }
+        .hamburger {
+            display: none;
             flex-direction: column;
-            gap: 2rem;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            cursor: pointer;
         }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.5rem;
-            background: var(--card);
-            border-radius: var(--radius);
-            border: 1px solid var(--border);
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--foreground);
             transition: all 0.3s ease;
         }
-
-        .contact-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(7.5px) rotate(45deg);
         }
-
-        .contact-icon {
-            width: 3rem;
-            height: 3rem;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-foreground);
-            font-size: 1.25rem;
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
         }
-
-        .contact-details h3 {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            color: var(--foreground);
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-7.5px) rotate(-45deg);
         }
-
-        .contact-details p {
-            color: var(--muted-foreground);
+        .aside-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 250px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--card), var(--secondary));
+            z-index: 1000;
+            transition: right 0.3s ease-in-out;
+            padding: 2rem 1.5rem;
+            box-shadow: -4px 0 16px rgba(0, 0, 0, 0.2);
         }
-
-        .contact-details a {
-            color: var(--primary);
-            text-decoration: none;
+        .aside-nav.active {
+            right: 0;
         }
-
-        .contact-details a:hover {
-            text-decoration: underline;
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
         }
-
-        .register-section {
-            text-align: center;
-            padding: 3rem;
-            background: var(--card);
-            border-radius: calc(var(--radius) * 2);
-            border: 1px solid var(--border);
+        .overlay.active {
+            display: block;
         }
-
-        .register-section h3 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--foreground);
-        }
-
-        .register-section p {
-            font-size: 1.1rem;
-            color: var(--muted-foreground);
-            margin-bottom: 2rem;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--foreground);
-            color: var(--background);
-            text-align: center;
-            padding: 2rem 0;
-        }
-
-        /* Mobile Responsiveness */
         @media (max-width: 768px) {
-            .nav-links {
+            .hamburger {
+                display: flex;
+            }
+            .desktop-nav {
                 display: none;
             }
-
-            .hero {
-                padding: 6rem 0 3rem;
-            }
-
-            .about-content,
-            .contact-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .cta-buttons {
+            .flex-responsive {
                 flex-direction: column;
-                align-items: center;
+                gap: 1rem;
             }
-
-            .btn-primary,
-            .btn-secondary {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
-            }
-
-            .features {
+            .bento-grid {
                 grid-template-columns: 1fr;
+                grid-template-areas:
+                    "desc"
+                    "feat1"
+                    "feat2"
+                    "feat3"
+                    "feat4";
             }
-
-            .loading-spinner {
-                width: 50px;
-                height: 50px;
+            .contact-grid {
+                grid-template-columns: 1fr !important;
+                grid-template-areas: none !important;
             }
-
-            .loading-title {
-                font-size: 1.1rem;
+            section {
+                padding: 4rem 1.5rem;
             }
-
-            .loading-progress {
-                width: 150px;
+            .card {
+                padding: 1.5rem;
             }
-        }
-
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Loading animation */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
+            .video-container {
+                margin: 1.5rem 0;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            h1, h2, h3, h4 {
+                margin-bottom: 1rem;
+            }
+            p {
+                margin-bottom: 1rem;
             }
         }
-
-        .fade-in {
-            animation: fadeInUp 0.6s ease-out;
+        @media (min-width: 769px) {
+            section {
+                padding: 5rem 2rem;
+            }
+        }
+        @media (max-width: 640px) {
+            .btn-primary, .btn-secondary {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
         }
     </style>
 </head>
-<body>
-    <!-- Header -->
-    <header>
-        <nav class="container">
-            <a href="#" class="logo">COREBLOCK</a>
-            <ul class="nav-links">
-                <li><a onclick="scrollToSection('hero')">Home</a></li>
-                <li><a onclick="scrollToSection('video-section')">Workshop</a></li>
-                <li><a onclick="scrollToSection('about-section')">About</a></li>
-                <li><a onclick="scrollToSection('contact-section')">Contact</a></li>
-            </ul>
-            <a href="#register" class="register-btn-nav" onclick="scrollToSection('contact-section')">Register Now</a>
-        </nav>
-    </header>
+<body class="font-sans">
+    <div class="grid-pattern"></div>
+    <!-- Navigation -->
+    <nav class="sticky top-0 bg-[var(--card)] shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="text-2xl font-bold text-[var(--foreground)]">COREBLOCK</div>
+                <div class="desktop-nav hidden md:flex space-x-6">
+                    <a href="#home" class="text-[var(--foreground)] hover:text-[var(--primary)] transition-colors text-sm font-medium">Home</a>
+                    <a href="#workshop" class="text-[var(--foreground)] hover:text-[var(--primary)] transition-colors text-sm font-medium">Workshop</a>
+                    <a href="#about" class="text-[var(--foreground)] hover:text-[var(--primary)] transition-colors text-sm font-medium">About</a>
+                    <a href="#contact" class="text-[var(--foreground)] hover:text-[var(--primary)] transition-colors text-sm font-medium">Contact</a>
+                </div>
+                <a href="#register" class="btn-primary text-sm scale-in hidden md:block">Register Now</a>
+                <div class="hamburger md:hidden" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+        <!-- Aside Navigation for Mobile -->
+        <aside class="aside-nav" id="asideNav">
+            <div class="flex flex-col gap-6 mt-8">
+                <a href="#home" class="text-[var(--foreground)] hover:text-[var(--primary)] text-lg font-medium">Home</a>
+                <a href="#workshop" class="text-[var(--foreground)] hover:text-[var(--primary)] text-lg font-medium">Workshop</a>
+                <a href="#about" class="text-[var(--foreground)] hover:text-[var(--primary)] text-lg font-medium">About</a>
+                <a href="#contact" class="text-[var(--foreground)] hover:text-[var(--primary)] text-lg font-medium">Contact</a>
+                <a href="#register" class="btn-primary text-lg scale-in">Register Now</a>
+            </div>
+        </aside>
+        <div class="overlay" id="overlay"></div>
+    </nav>
 
     <!-- Hero Section -->
-    <section id="hero" class="hero">
-        <div class="container">
-            <div class="hero-content fade-in">
-                <h1>Transform Your Skills with COREBLOCK</h1>
-                <p>Join our comprehensive workshop designed to elevate your expertise and unlock new opportunities in your career journey.</p>
-                <div class="cta-buttons">
-                    <a href="#register" class="btn-primary" onclick="scrollToSection('contact-section')">
-                        🚀 Register Now
-                    </a>
-                    <a href="#video" class="btn-secondary" onclick="scrollToSection('video-section')">
-                        ▶️ Watch Preview
-                    </a>
-                </div>
+    <section id="home" class="section-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--foreground)] mb-6">Transform Your Skills with COREBLOCK</h1>
+            <p class="text-base sm:text-lg md:text-xl text-[var(--muted-foreground)] mb-8 max-w-3xl mx-auto">
+                Join our comprehensive workshop designed to elevate your expertise and unlock new opportunities in your career journey. Experience cutting-edge learning methodologies that deliver real results.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 flex-responsive">
+                <a href="#register" class="btn-primary text-base sm:text-lg scale-in">🚀 Register Now</a>
+                <a href="#workshop" class="btn-secondary text-base sm:text-lg scale-in">▶️ Watch Preview</a>
             </div>
         </div>
     </section>
 
-    <!-- Video Section -->
-    <section id="video-section" class="video-section">
-        <div class="container">
-            <div class="section-header fade-in">
-                <h2>Workshop Preview</h2>
-                <p>Get a glimpse of what you'll learn and experience in our comprehensive workshop</p>
+    <!-- Workshop Preview Section -->
+    <section id="workshop" class="bg-[var(--card)] section-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center fade-in">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-6">Workshop Preview</h2>
+                <p class="text-base sm:text-lg text-[var(--muted-foreground)] mb-8 max-w-2xl mx-auto">
+                    Get a glimpse of what you'll learn and experience in our comprehensive workshop
+                </p>
             </div>
             <div class="video-container fade-in">
                 <!-- Loading State -->
@@ -642,7 +452,7 @@
                     <div class="loading-content">
                         <div class="loading-title">Loading Workshop Preview</div>
                         <div class="loading-text">Preparing your exclusive content...</div>
-                        <div class="loading-progress">
+                        <div class personally-identifiable-information-removed">
                             <div class="loading-progress-bar"></div>
                         </div>
                         <div class="loading-dots">
@@ -652,13 +462,10 @@
                         </div>
                     </div>
                 </div>
-                
                 <!-- Video iframe -->
                 <iframe 
                     id="workshopVideo"
                     src="https://player.cloudinary.com/embed/?cloud_name=dlfgy3dfq&public_id=xri2xqy5lh3gtboi1bev&profile=workshop%20video" 
-                    width="640" 
-                    height="360"  
                     style="height: auto; width: 100%; aspect-ratio: 16/9;" 
                     allow="autoplay; fullscreen; encrypted-media; picture-in-picture" 
                     allowfullscreen 
@@ -670,41 +477,104 @@
     </section>
 
     <!-- About Section -->
-    <section id="about-section" class="about-section">
-        <div class="container">
-            <div class="section-header fade-in">
-                <h2>About COREBLOCK</h2>
-                <p>Empowering professionals with cutting-edge skills and knowledge</p>
-            </div>
-            
-            <div class="about-content fade-in">
-                <div class="about-text">
-                    <h2>Why Choose Our Workshop?</h2>
-                    <p>At COREBLOCK, we believe in delivering exceptional learning experiences that transform careers. Our workshops are designed by industry experts who understand the real-world challenges you face.</p>
-                    <p>We combine theoretical knowledge with practical applications, ensuring you leave with skills you can immediately apply in your professional environment.</p>
+    <section id="about" class="section-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--foreground)] text-center mb-12">About COREBLOCK</h2>
+            <p class="text-base sm:text-lg text-[var(--muted-foreground)] text-center mb-8 max-w-2xl mx-auto">
+                Empowering professionals with cutting-edge skills and transformative knowledge
+            </p>
+            <div class="hidden lg:grid bento-grid">
+                <div class="bento-desc card fade-in">
+                    <h3 class="text-xl sm:text-2xl font-semibold text-[var(--foreground)] mb-4">Why Choose Our Workshop?</h3>
+                    <p class="text-sm sm:text-base text-[var(--muted-foreground)]">
+                        At COREBLOCK, we believe in delivering exceptional learning experiences that transform careers. Our workshops are meticulously designed by industry experts who understand the real-world challenges you face every day.
+                    </p>
+                    <p class="text-sm sm:text-base text-[var(--muted-foreground)] mt-4">
+                        We combine theoretical knowledge with practical applications, ensuring you leave with skills you can immediately implement in your professional environment and see tangible results.
+                    </p>
                 </div>
-                <div class="about-visual">
-                    <div class="features">
-                        <div class="feature-card">
-                            <div class="feature-icon">🎯</div>
-                            <h3>Expert-Led Sessions</h3>
-                            <p>Learn from industry professionals with years of real-world experience</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🚀</div>
-                            <h3>Hands-On Learning</h3>
-                            <p>Practical exercises and projects that reinforce your learning</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🏆</div>
-                            <h3>Career Growth</h3>
-                            <p>Skills and knowledge that directly impact your professional development</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🤝</div>
-                            <h3>Community Support</h3>
-                            <p>Connect with like-minded professionals and expand your network</p>
-                        </div>
+                <div class="bento-feat1 card flex items-start gap-4 fade-in">
+                    <span class="text-2xl">🎯</span>
+                    <div>
+                        <h4 class="text-base sm:text-lg font-semibold text-[var(--foreground)]">Expert-Led Sessions</h4>
+                        <p class="text-sm sm:text-base text-[var(--muted-foreground)]">
+                            Learn from industry professionals with years of real-world experience and proven track records
+                        </p>
+                    </div>
+                </div>
+                <div class="bento-feat2 card flex items-start gap-4 fade-in">
+                    <span class="text-2xl">🚀</span>
+                    <div>
+                        <h4 class="text-base sm:text-lg font-semibold text-[var(--foreground)]">Hands-On Learning</h4>
+                        <p class="text-sm sm:text-base text-[var(--muted-foreground)]">
+                            Practical exercises and real-world projects that reinforce your learning and build confidence
+                        </p>
+                    </div>
+                </div>
+                <div class="bento-feat3 card flex items-start gap-4 fade-in">
+                    <span class="text-2xl">🏆</span>
+                    <div>
+                        <h4 class="text-base sm:text-lg font-semibold text-[var(--foreground)]">Career Growth</h4>
+                        <p class="text-sm sm:text-base text-[var(--muted-foreground)]">
+                            Skills and knowledge that directly impact your professional development and advancement
+                        </p>
+                    </div>
+                </div>
+                <div class="bento-feat4 card flex items-start gap-4 fade-in">
+                    <span class="text-2xl">🤝</span>
+                    <div>
+                        <h4 class="text-base sm:text-lg font-semibold text-[var(--foreground)]">Community Support</h4>
+                        <p class="text-sm sm:text-base text-[var(--muted-foreground)]">
+                            Connect with like-minded professionals and expand your network for future opportunities
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile/Tablet View -->
+            <div class="lg:hidden grid gap-6">
+                <div class="card fade-in">
+                    <h3 class="text-xl sm:text-2xl font-semibold text-[var(--foreground)] mb-4">Why Choose Our Workshop?</h3>
+                    <p class="text-sm sm:text-base text-[var(--muted-foreground)]">
+                        At COREBLOCK, we believe in delivering exceptional learning experiences that transform careers. Our workshops are meticulously designed by industry experts who understand the real-world challenges you face every day.
+                    </p>
+                    <p class="text-sm sm:text-base text-[var(--muted-foreground)] mt-4">
+                        We combine theoretical knowledge with practical applications, ensuring you leave with skills you can immediately implement in your professional environment and see tangible results.
+                    </p>
+                </div>
+                <div class="card flex items-start gap-4 fade-in">
+                    <span class="text-2xl">🎯</span>
+                    <div>
+                        <h4 class="text-base sm:text-lg font-semibold text-[var(--foreground)]">Expert-Led Sessions</h4>
+                        <p class="text-sm sm:text-base text-[var(--muted-foreground)]">
+                            Learn from industry professionals with years of real-world experience and proven track records
+                        </p>
+                    </div>
+                </div>
+                <div class="card flex items-start gap-4 fade-in">
+                    <span class="text-2xl">🚀</span>
+                    <div>
+                        <h4 class="text-base sm:text-lg font-semibold text-[var(--foreground)]">Hands-On Learning</h4>
+                        <p class="text-sm sm:text-base text-[var(--muted-foreground)]">
+                            Practical exercises and real-world projects that reinforce your learning and build confidence
+                        </p>
+                    </div>
+                </div>
+                <div class="card flex items-start gap-4 fade-in">
+                    <span class="text-2xl">🏆</span>
+                    <div>
+                        <h4 class="text-base sm:text-lg font-semibold text-[var(--foreground)]">Career Growth</h4>
+                        <p class="text-sm sm:text-base text-[var(--muted-foreground)]">
+                            Skills and knowledge that directly impact your professional development and advancement
+                        </p>
+                    </div>
+                </div>
+                <div class="card flex items-start gap-4 fade-in">
+                    <span class="text-2xl">🤝</span>
+                    <div>
+                        <h4 class="text-base sm:text-lg font-semibold text-[var(--foreground)]">Community Support</h4>
+                        <p class="text-sm sm:text-base text-[var(--muted-foreground)]">
+                            Connect with like-minded professionals and expand your network for future opportunities
+                        </p>
                     </div>
                 </div>
             </div>
@@ -712,146 +582,127 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact-section" class="contact-section">
-        <div class="container">
-            <div class="section-header fade-in">
-                <h2>Get In Touch</h2>
-                <p>Ready to transform your career? Contact us today to secure your spot</p>
-            </div>
-            
-            <div class="contact-content fade-in">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">📱</div>
-                        <div class="contact-details">
-                            <h3>Phone</h3>
-                            <p><a href="tel:+919390554007">+91 9390554007</a></p>
+    <section id="contact" class="bg-[var(--card)] section-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-[var(--foreground)] text-center mb-12">Get In Touch</h2>
+            <div class="lg:grid lg:grid-cols-2 lg:gap-8 contact-grid">
+                <!-- Left Side: Contact Info -->
+                <div class="card fade-in mb-8 lg:mb-0">
+                    <h3 class="text-xl sm:text-2xl font-semibold text-[var(--foreground)] mb-6">Contact Us</h3>
+                    <p class="text-base sm:text-lg text-[var(--muted-foreground)] mb-6">
+                        Ready to transform your career? Reach out to us to secure your spot in our next workshop.
+                    </p>
+                    <div class="grid gap-6">
+                        <div class="flex items-center gap-4">
+                            <span class="text-2xl">📱</span>
+                            <div>
+                                <h4 class="text-base sm:text-lg font-semibold text-[var(--foreground)]">Phone</h4>
+                                <p class="text-sm sm:text-base text-[var(--muted-foreground)]">+91 9390554007</p>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">✉️</div>
-                        <div class="contact-details">
-                            <h3>Email</h3>
-                            <p><a href="mailto:h5coreblock@gmail.com">h5coreblock@gmail.com</a></p>
+                        <div class="flex items-center gap-4">
+                            <span class="text-2xl">✉️</span>
+                            <div>
+                                <h4 class="text-base sm:text-lg font-semibold text-[var(--foreground)]">Email</h4>
+                                <a href="mailto:h5corebloack@gmail.com" class="text-[var(--primary)] hover:underline text-sm sm:text-base">h5corebloack@gmail.com</a>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">💼</div>
-                        <div class="contact-details">
-                            <h3>LinkedIn</h3>
-                            <p><a href="https://www.linkedin.com/in/chandra-virat-illa" target="_blank">Connect with us</a></p>
+                        <div class="flex items-center gap-4">
+                            <span class="text-2xl">💼</span>
+                            <div>
+                                <h4 class="text-base sm:text-lg font-semibold text-[var(--foreground)]">LinkedIn</h4>
+                                <a href="https://www.linkedin.com/in/chandra-virat-illa" target="_blank" class="text-[var(--primary)] hover:underline text-sm sm:text-base">Connect with us</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="register-section">
-                    <h3>Ready to Join?</h3>
-                    <p>Don't miss this opportunity to advance your career. Register now and secure your spot in our next workshop.</p>
-                    <a href="#register" class="btn-primary" style="font-size: 1.2rem; padding: 1.25rem 2.5rem;">
-                        🎯 Register Now
-                    </a>
-                    <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--muted-foreground);">
-                        Payment integration coming soon with Razorpay
+                <!-- Right Side: Register -->
+                <div class="card fade-in">
+                    <h3 class="text-xl sm:text-2xl font-semibold text-[var(--foreground)] mb-6">Ready to Join?</h3>
+                    <p class="text-base sm:text-lg text-[var(--muted-foreground)] mb-6">
+                        Don't miss this opportunity to advance your career. Register now and secure your spot in our next workshop session.
                     </p>
+                    <div class="flex flex-wrap justify-center gap-4 flex-responsive">
+                        <a href="#register" class="btn-primary text-base sm:text-lg scale-in">🎯 Register Now</a>
+                        <p class="text-xs sm:text-sm text-[var(--muted-foreground)] w-full text-center">Payment integration coming soon with Razorpay</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile/Tablet View -->
+            <div class="lg:hidden text-center fade-in">
+                <p class="text-base sm:text-lg text-[var(--muted-foreground)] mb-8 max-w-2xl mx-auto">
+                    Ready to transform your career? Contact us today to secure your spot in our next workshop
+                </p>
+                <div class="grid gap-6 mb-12">
+                    <div class="card flex items-center gap-4">
+                        <span class="text-2xl">📱</span>
+                        <div>
+                            <h4 class="text-base sm:text-lg font-semibold text-[var(--foreground)]">Phone</h4>
+                            <p class="text-sm sm:text-base text-[var(--muted-foreground)]">+91 9390554007</p>
+                        </div>
+                    </div>
+                    <div class="card flex items-center gap-4">
+                        <span class="text-2xl">✉️</span>
+                        <div>
+                            <h4 class="text-base sm:text-lg font-semibold text-[var(--foreground)]">Email</h4>
+                            <a href="mailto:h5corebloack@gmail.com" class="text-[var(--primary)] hover:underline text-sm sm:text-base">h5corebloack@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="card flex items-center gap-4">
+                        <span class="text-2xl">💼</span>
+                        <div>
+                            <h4 class="text-base sm:text-lg font-semibold text-[var(--foreground)]">LinkedIn</h4>
+                            <a href="https://www.linkedin.com/in/chandra-virat-illa" target="_blank" class="text-[var(--primary)] hover:underline text-sm sm:text-base">Connect with us</a>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-xl sm:text-2xl font-semibold text-[var(--foreground)] mb-4">Ready to Join?</h3>
+                <p class="text-sm sm:text-base text-[var(--muted-foreground)] mb-4">
+                    Don't miss this opportunity to advance your career. Register now and secure your spot in our next workshop session.
+                </p>
+                <div class="flex flex-wrap justify-center gap-4 flex-responsive">
+                    <a href="#register" class="btn-primary text-base sm:text-lg scale-in">🎯 Register Now</a>
+                    <p class="text-xs sm:text-sm text-[var(--muted-foreground)] w-full">Payment integration coming soon with Razorpay</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 COREBLOCK. All rights reserved. Transforming careers, one workshop at a time.</p>
-        </div>
+    <footer class="py-8 bg-[var(--background)] text-center text-[var(--muted-foreground)]">
+        <p18px class="text-sm">© 2025 COREBLOCK. All rights reserved. Transforming careers, one workshop at a time.</p>
     </footer>
 
     <script>
-        // Video loading management
         function hideVideoLoading() {
-            const loadingElement = document.getElementById('videoLoading');
-            if (loadingElement) {
-                setTimeout(() => {
-                    loadingElement.classList.add('hidden');
-                }, 500); // Small delay for better UX
+            const loadingDiv = document.getElementById('videoLoading');
+            if (loadingDiv) {
+                loadingDiv.classList.add('hidden');
             }
         }
 
-        // Initialize video loading state
-        document.addEventListener('DOMContentLoaded', () => {
-            const video = document.getElementById('workshopVideo');
-            const loadingElement = document.getElementById('videoLoading');
-            
-            // Backup timer in case onload doesn't fire
-            setTimeout(() => {
-                if (loadingElement && !loadingElement.classList.contains('hidden')) {
-                    loadingElement.classList.add('hidden');
-                }
-            }, 5000); // Hide after 5 seconds max
-            
-            // Handle video load error
-            video.onerror = () => {
-                const loadingTitle = document.querySelector('.loading-title');
-                const loadingText = document.querySelector('.loading-text');
-                const spinner = document.querySelector('.loading-spinner');
-                const progress = document.querySelector('.loading-progress');
-                const dots = document.querySelector('.loading-dots');
-                
-                if (loadingTitle) loadingTitle.textContent = 'Unable to Load Video';
-                if (loadingText) loadingText.textContent = 'Please check your connection and try again';
-                if (spinner) spinner.style.display = 'none';
-                if (progress) progress.style.display = 'none';
-                if (dots) dots.style.display = 'none';
-            };
+        const hamburger = document.getElementById('hamburger');
+        const asideNav = document.getElementById('asideNav');
+        const overlay = document.getElementById('overlay');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            asideNav.classList.toggle('active');
+            overlay.classList.toggle('active');
         });
 
-        // Smooth scroll function
-        function scrollToSection(sectionId) {
-            const element = document.getElementById(sectionId);
-            if (element) {
-                const offsetTop = element.offsetTop - 80; // Account for fixed header
-                window.scrollTo({
-                    top: offsetTop,
-                    behavior: 'smooth'
-                });
-            }
-        }
-
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all fade-in elements
-        document.addEventListener('DOMContentLoaded', () => {
-            const fadeElements = document.querySelectorAll('.fade-in');
-            fadeElements.forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-                observer.observe(el);
-            });
+        overlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            asideNav.classList.remove('active');
+            overlay.classList.remove('active');
         });
 
-        // Header background on scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-            }
+        asideNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                asideNav.classList.remove('active');
+                overlay.classList.remove('active');
+            });
         });
     </script>
 </body>
